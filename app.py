@@ -8,7 +8,7 @@ def mensaje():
 
 @app.route("/", methods=["GET"])
 def home():
-    return "Microservicio de mensaje en Railway."
+    return "Microservicio de mensaje en Railway 2.0."
 
 if __name__ == "__main__":
     import os
