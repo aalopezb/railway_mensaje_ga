@@ -7,6 +7,8 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      RAILWAY_API_KEY: ${{ secrets.RAILWAY_API_KEY }}
     steps:
       - uses: actions/checkout@v3
 
@@ -16,7 +18,8 @@ jobs:
           echo "${{ secrets.RAILWAY_PROJECT_ID }}" > .railway/linked_project
 
       - name: Deploy to Railway
+        shell: bash
         run: |
+          set -x
           npm install -g @railway/cli
-          export RAILWAY_TOKEN=${{ secrets.RAILWAY_TOKEN }}
           railway up --detach
