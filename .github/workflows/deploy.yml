@@ -17,9 +17,11 @@ jobs:
           mkdir -p .railway
           echo "${{ secrets.RAILWAY_PROJECT_ID }}" > .railway/linked_project
 
+      - name: Install Railway CLI
+        run: npm install -g @railway/cli
+
+      - name: Login to Railway
+        run: railway login --apiKey $RAILWAY_API_KEY
+
       - name: Deploy to Railway
-        shell: bash
-        run: |
-          set -x
-          npm install -g @railway/cli
-          railway up --detach
+        run: railway up --detach
