@@ -7,15 +7,13 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v3
-
-      - name: Deploy to Railway (sin carpeta .railway)
+      - name: Deploy to Railway
         env:
-          RAILWAY_API_KEY: ${{ secrets.RAILWAY_API_KEY }}
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
           RAILWAY_PROJECT_ID: ${{ secrets.RAILWAY_PROJECT_ID }}
         run: |
           npm install -g @railway/cli
-          npx @railway/cli login --apiKey $RAILWAY_API_KEY
-          npx @railway/cli deploy --project $RAILWAY_PROJECT_ID
+          railway deploy --project $RAILWAY_PROJECT_ID
+
