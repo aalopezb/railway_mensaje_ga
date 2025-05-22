@@ -1,0 +1,8 @@
+jobs:
+  deploy:
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Railway project link
+        run: |
+          mkdir -p .railway
+          echo "${{ secrets.RAILWAY_PROJECT_ID }}" > .railway/linked_project
