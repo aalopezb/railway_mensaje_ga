@@ -2,8 +2,7 @@ name: Deploy to Railway
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
 
 jobs:
   deploy:
@@ -12,15 +11,16 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Install Railway CLI
+      - name: Instalar Railway CLI
         run: npm install -g @railway/cli
 
-      - name: Setup Railway project link
+      - name: Login a Railway
+        run: railway login --apiKey ${{ secrets.RAILWAY_TOKEN }}
+
+      - name: Crear archivo linked_project
         run: |
           mkdir -p .railway
           echo "${{ secrets.RAILWAY_PROJECT_ID }}" > .railway/linked_project
 
-      - name: Deploy to Railway
-        env:
-          RAILWAY_API_KEY: ${{ secrets.RAILWAY_TOKEN }}
+      - name: Deploy a Railway
         run: railway up --service "auto-generated"
