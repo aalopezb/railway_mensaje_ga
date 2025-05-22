@@ -7,18 +7,16 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v3
 
-      - name: Setup Railway project link
+      - name: Set Railway project link
         run: |
           mkdir -p .railway
           echo "${{ secrets.RAILWAY_PROJECT_ID }}" > .railway/linked_project
 
       - name: Deploy to Railway
-        env:
-          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
         run: |
           npm install -g @railway/cli
+          export RAILWAY_TOKEN=${{ secrets.RAILWAY_TOKEN }}
           railway up --detach
