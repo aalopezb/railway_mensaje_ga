@@ -2,7 +2,7 @@ name: Deploy to Railway
 
 on:
   push:
-    branches: [ main ] 
+    branches: [ main ]  
 
 jobs:
   deploy:
@@ -10,10 +10,13 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
-      - name: Deploy to Railway
-        uses: railwayapp/action@v1
-        with:
-          railway-token: ${{ secrets.RAILWAY_TOKEN }}
-          project-id: ${{ secrets.RAILWAY_PROJECT_ID }}
-          environment: production
+        uses: actions/checkout@v4
+
+      - name: Install Railway CLI
+        run: npm install -g @railway/cli
+
+      - name: Deploy
+        run: railway up --service melodious-clarity --detach
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+          RAILWAY_PROJECT_ID: ${{ secrets.RAILWAY_PROJECT_ID }}
